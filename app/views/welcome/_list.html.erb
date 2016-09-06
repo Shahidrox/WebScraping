@@ -1,0 +1,26 @@
+<% 
+  @card = card
+%>
+<% if @card.present? %>
+<% @card.each do |f| %>
+  <%
+    style = (f[:seller] == 'Gift Card Spread')? 'gcs-color' : ''
+  %>
+  <tr>
+    <td class= <%= style %>><%= f[:rank] %></td>
+    <td><%= f[:merchant] %></td>
+    <td><%= f[:card_type] %></td>
+    <td><%= f[:quantity] %></td>
+    <td><%= f[:value] %></td>
+    <td class= <%= style %>><%= f[:v_rank]%></td>
+    <td><%= f[:discount] %></td>
+    <td class= <%= style %>><%= f[:seller] %></td>
+    <td><% if (f[:seller] == 'Gift Card Spread')%><span class="label label-danger"><%= number_with_precision(f[:one_and_one], precision: 2) %></span><%end%></td>
+    <td><% if (f[:seller] == 'Gift Card Spread')%><span class="label label-success"><%= number_with_precision(f[:one_and_gcs], precision: 2) %></span><%end%></td>
+  </tr>
+<% end %>
+<% else %>
+<tr>
+  <td colspan=10> <center>No Card found</center></td>
+</tr>
+<% end %>

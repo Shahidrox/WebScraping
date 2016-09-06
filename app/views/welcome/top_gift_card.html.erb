@@ -1,0 +1,197 @@
+<div class="row">
+  <div class="col-sm-3 content-left sort-group">
+    <div class="panel panel-shadow">
+      <div class="panel-body">
+        <span class="panel-title"><a href="#">BY CARD TYPE</a></span>
+        <span class="pull-right"><img alt="img" class="img-responsive ico" src="/assets/card.png"></span>
+        <hr>
+        <div class="radio sort-difference">
+          <input type="radio" rel="physical" id="physical-filter"data-count-id="physical" value="physical"  name='type' checked="checked">
+          <label for="physical-filter">Physical Gift Card</label>
+          <br>
+
+          <input type="radio" rel="ecode" id="ecode-filter"data-count-id="ecode" value="ecode" name='type'>
+          <label for="ecode-filter">Online Gift Card</label>
+        </div>
+        <hr>
+        <span class="panel-title"><a href="#">FILTER BY CARD VALUE</a></span>
+        <span class="pull-right"><img alt="img" class="img-responsive ico" src="/assets/tag.png"></span>
+        <hr>
+        <div class="radio sort-difference">
+          <input type="radio" value="1" name="price_rule" id='1-filter' checked="checked">
+          <label for="1-filter">$0 - $24.99</label><br>
+          <input type="radio" value="2" name="price_rule" id='2-filter'>
+          <label for="2-filter">$25 - $49.99</label><br>
+          <input type="radio" value="3" name="price_rule" id='3-filter'> 
+          <label for="3-filter">$50 - $99.99</label><br>
+          <input type="radio" value="4" name="price_rule" id='4-filter'> 
+          <label for="4-filter">$100 - $249.99</label><br>
+          <input type="radio" value="5" name="price_rule" id='5-filter'> 
+          <label for="5-filter">$250+</label><br>
+          <input type="radio" value="6" name="price_rule" id='6-filter'> 
+          <label for="6-filter">All</label><br>
+        </div>
+        <hr>
+        <a href="javascript:void(0)" id="clear" class="btn btn-info btn-xs">Clear</a>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-9">
+    <div class="alert alert-danger fade in error_msg" style="display:none">
+      <a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a>
+      <strong>Message!</strong> we found some problem in updation.
+    </div>
+    <div class="form-group">
+      <div class="row" style="z-index: 1">
+        <div class="col-md-4"><%= select_tag "rank", options_for_select([ 'Sort Rank', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10' ]), class: "form-control" %></div>
+        <div class="col-md-6"><input type="text" id="search" class="form-control" placeholder="Live search" /></div>
+        <div class="col-md-2"><a href='javascript:void(0)' id="update_card"  class="btn btn-info"> Update Data</a></div>
+      </div>
+    </div>
+    <div class="table-responsive">
+    <table class="table table-bordered" id="table">
+      <thead>
+        <% if @card_time.present? %>
+        <tr>
+          <td colspan="10" class='text-center'>
+            <button class="btn btn-default">
+              <i class="fa fa-clock-o" aria-hidden="true"></i> Last updated at: <%= @card_time.in_time_zone("Central Time (US & Canada)").strftime("%d/%m/%Y %I:%M %p") %>
+            </button>
+            <a href='/unavailable_merchant' class="btn btn-danger more-btn">More +</a>
+          </td>
+        </tr>
+        <% end %>
+        <div class="row">
+          <tr>
+            <th>Rank</th>
+            <th class="sort_table asc" data-columnname="merchant">Merchant
+              <span class="sort sort-asc">&#8595;</span>
+              <span class="sort sort-dsc">&#8593;</span>
+            </th>
+            <th style="width:10%">Type</th>
+            <th>Quantity</th>
+            <th>Value</th>
+            <th>V-Rank</th>
+            <th class="sort_table" style="width:12%" data-columnname="discount">Discount
+              <span class="sort sort-asc">&#8595;</span>
+              <span class="sort sort-dsc">&#8593;</span>
+            </th>
+            <th style="width:16%">Seller</th>
+            <th class="sort_table" style="width:12%" data-columnname="one_and_one">Diff. 1&2
+              <span class="sort sort-asc">&#8595;</span>
+              <span class="sort sort-dsc">&#8593;</span>
+            </th>
+            <th class="sort_table" style="width:13%" data-columnname="one_and_gcs">Diff. 1&GCS
+              <span class="sort sort-asc">&#8595;</span>
+              <span class="sort sort-dsc">&#8593;</span>
+            </th>
+          </tr>
+        </div>
+      </thead>
+      <tbody class="campaign_keywords"></tbody>
+    </table>
+    </div>
+  </div>  
+</div>
+<script type="text/javascript">
+  // $('input:radio[name="type"]').filter('[value="physical"]').attr('checked', true);
+  document.querySelector('input[name=type][value=physical]').checked = true;
+  abcd()
+  function abcd(){
+    $("#ajax_loader").show();
+    $.ajax({
+      type: 'GET',
+      url: '/feach_top_gift_card',
+      success: function(data) { },
+      error: function(xhr, textStatus, errorThrown){
+        console.log('request failed');
+        $("#ajax_loader").hide();
+        $('.error_msg').show();
+        $('.error_msg').delay(5000).fadeOut('slow');
+      }
+    });
+  }
+  $('.more-btn').click(function(){
+     $("#ajax_loader").show();
+  })  
+  $("#search").on("keyup", function() {
+    _this = this;
+    // Show only matching TR, hide rest of them
+    $.each($("#table tbody tr"), function() {
+      if ($(this).text().toLowerCase().indexOf($(_this).val().toLowerCase()) === -1)
+        $(this).hide();
+      else
+        $(this).show();
+    });
+  });
+    
+  $("#rank").change(function() {
+    commanSorting($(this).val())
+  })
+  
+  $('.sort-difference input').click(function() {
+    // $('#wip').modal('show');
+    commanSorting($("#rank").val())
+  })
+  $('th.sort_table').click(function() {
+    var columnName = $(this).data('columnname');
+    var ascSorted = false;
+    if ($(this).hasClass('asc')){
+      ascSorted = true;
+    }
+    $(".sort_table").removeClass('asc');
+    $(".sort_table").removeClass('dsc');
+    if (ascSorted){
+      $(this).addClass('dsc');
+      var sort_type = 'DESC'
+    } else {
+      $(this).addClass('asc');
+      var sort_type = 'ASC'
+    }
+    commanSorting($("#rank").val(), sort_type, columnName)
+  })
+  
+  function commanSorting(rank, sort, byName){
+    $("#ajax_loader").show();
+    var physical = $('#physical-filter').is(':checked');
+    var ecode = $('#ecode-filter').is(':checked');
+    var price_rule = $("input[name=price_rule]:checked").val()
+    $.ajax({
+      type: 'GET',
+      url: '/sort_with_rank',
+      data: ({'rank': rank, 'sort': sort, 'byname': byName, 'physical': physical, 'ecode': ecode, 'price_rule': price_rule}),
+      success: function(data) { 
+      },
+      error: function(xhr, textStatus, errorThrown){
+        $("#ajax_loader").hide();
+        console.log('request failed');
+        $('.error_msg').show();
+        $('.error_msg').delay(5000).fadeOut('slow');
+      }
+    });
+  }
+  
+  $("#update_card").click(function(){
+    $("#ajax_loader").show();
+    $.ajax({
+      type: 'GET',
+      url: '/update_cards',
+      timeout: (300 * 1000),
+      success: function(data) { },
+      error: function(xhr, textStatus, errorThrown){
+        $("#ajax_loader").hide();
+        $('.error_msg').show();
+        $('.error_msg').delay(5000).fadeOut('slow');
+        // setInterval(alertFunc, 50 * 1000);
+      }
+    });
+  })
+  $('#clear').click(function() {
+    location.reload();
+  });
+  function alertFunc(){
+    // $("#ajax_loader").hide();
+    // $('.error_msg').show();
+    location.reload();
+  }
+</script>

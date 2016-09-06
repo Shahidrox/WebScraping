@@ -1,0 +1,50 @@
+<table class="table table-bordered" id="table">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th></th>
+            <th>Merchant</th>
+            <th>Type</th>
+            <th>Value</th>
+            <th>Savings</th>
+            <th>Discount</th>
+            <th>Seller</th>
+        </tr>
+    </thead>
+    <tbody id="campaign_keywords">
+
+    </tbody>
+</table>
+
+
+<script type="text/javascript">
+     abcd()
+    function abcd(){
+    $("#ajax_loader").show();
+        $.ajax({
+            type: 'GET',
+            url: '/feach_flash_deals',
+            success: function(data) {
+                console.log(data.msg)
+                    // ascending order
+                // function MaxSavings(x, y) {
+                //     return y.max_savings - x.max_savings;
+                // }
+                function compareStrings(a, b) {
+                  // Assuming you want case-insensitive comparison
+                  a = a.toLowerCase();
+                  b = b.toLowerCase();
+                  return (a < b) ? -1 : (a > b) ? 1 : 0;
+                }
+                function Merchant(a, b) {
+                  return compareStrings(a.merchant.name, b.merchant.name);
+                }
+                data.msg.sort(Merchant);
+                for (var n = 0; n < data.msg.length; n++) {
+                    $('#campaign_keywords').append("<tr><td>" + (n + 1) + "</td><td><img src=" + data.msg[n].merchant.images.small + "></td><td>" + data.msg[n].merchant.name + "</td><td>" + data.msg[n].type + "</td><td>" + data.msg[n].value + "</td><td>" + data.msg[n].savings + "</td><td>" + data.msg[n].save_percent + " %</td><td>" + data.msg[n].partner.name +"</td></tr>");
+                }
+                $("#ajax_loader").hide();
+            },
+        });
+    }
+</script>

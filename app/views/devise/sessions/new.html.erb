@@ -1,0 +1,20 @@
+<style>
+      body {
+  background: #eee !important;
+}
+
+
+
+    </style>
+
+
+
+<div class="wrapper">
+  <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: {class:'form-signin'}) do |f| %>
+    <h2 class="form-signin-heading">Please login</h2>
+    <%= f.email_field :email, autofocus: true, class: 'form-control', placeholder: 'Email Address', 'required' => 'required' %>
+    <%= f.password_field :password, autocomplete: 'off', class: 'form-control', placeholder: 'Password', 'required' => 'required' %>
+    <%= f.submit "Login", class: 'btn btn-lg btn-primary btn-block' %>  
+  <% end %>
+</div>
+  <%#= render "devise/shared/links" %>

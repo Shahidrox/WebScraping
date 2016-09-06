@@ -1,0 +1,69 @@
+<div class="ui-widget form-group">
+    <input id="automplete-1" class="form-control" placeholder="Search Merchant">
+</div>
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Qty</th>
+      <th>Value</th>
+      <th>Type</th>
+      <!--<th>You Pay</th>-->
+      <!--<th>Savings</th>-->
+      <th>Discount</th>
+      <th>Seller</th>
+    </tr>
+  </thead>
+  <tbody id="tableData">
+
+  </tbody>
+</table>
+
+      
+<script type="text/javascript">
+  updateSeller();
+
+  function updateSeller(){
+    $.ajax({
+      type: 'Post',
+      url: '/update_seller',
+      success: function(data) { 
+          console.log(data);
+      },
+    });
+  }
+    
+  function onChangeData(key){
+    $("#ajax_loader").show();
+    $('#tableData tr').remove();
+    $.ajax({
+      type: 'GET',
+      url: '/get_merchant_data',
+      data: {key :key},
+      success: function(data) { 
+          $("#ajax_loader").hide();
+          for (var n = 0; n < data.msg.length; n++) {
+            var cls = (data.msg[n].sN === 'Gift Card Spread')? 'gcs-color' : ''
+            $('#tableData').append("<tr><td>" + (n + 1) +"</td><td>"+ data.msg[n].qu+ "</td><td>"+data.msg[n].va+"</td><td>"+data.msg[n].ty+"</td><td>"+data.msg[n].sP +"</td><td class="+cls+">"+data.msg[n].sN+"</td></tr>");
+          }
+      },
+      error: function(xhr, textStatus, errorThrown){
+        $("#ajax_loader").hide();
+      }
+    });
+  }
+
+  $( "#automplete-1" ).autocomplete({
+    source: <%= @data.to_json.html_safe %>,
+    select: function (e, v) {
+      key = v.item.value.replace(" & ", "-and-")
+      key = key.item.value.replace("&", "-and-")
+      key = key.replace("'", "")
+      // key = key.replace(/([a-z])([A-Z])/g, '$1-$2')
+      key = key.split(' ').join('-').toLowerCase()
+      console.log(key)
+      onChangeData(key)
+    }
+  });
+</script>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="description" content="...">
+		<meta name="keywords" content="...">
+		<meta name="author" content="...">
+		<title>Gift Cards</title>
+		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+		<!--[if lt IE 9]>
+			<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+			<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+		<![endif]-->
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+    <%= csrf_meta_tags %>
+  </head>
+<body>
+  <div id='ajax_loader' style="position: fixed; left: 50%; top: 50%; display: none; z-index: 9999999;">
+      <div class="modal-backdrop fade in"></div>
+      <img src="/assets/ajax-loader.gif">
+    </div>
+  <div class="container wrapper"> 
+    <div class="logo"><a href="/"><img src="/assets/fb.png" style="width:30%" alt="CZSale" title="CZSale" /></a></div>
+    <%= render partial: 'layouts/nav'%>
+    <div class="row content">
+      <%#= render partial: 'layouts/left_nav'%>
+      <div class="col-lg-12 content-right">
+      	<%= render partial: 'layouts/error'%>
+      	
+        <%= yield %>
+      </div>
+    </div>
+    <%= render partial: 'layouts/footer'%>
+  </div>
+</body>
+</html>

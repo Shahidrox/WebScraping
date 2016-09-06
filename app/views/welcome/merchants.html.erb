@@ -1,0 +1,42 @@
+
+<!--  <a href='#'><%#= mar[:m] %></a><br/>-->
+
+
+<div class="row products">
+  <% MERCHANT.each do |mar| %>
+  <div class="col-md-2 col-sm-2">
+    <div class="product">
+      <div class="image" style="height: 130px;">
+        <a href="/pricing_rules/<%= mar[:v] %>">
+          <img src="/assets/cards/<%= mar[:v] %>.png" alt="" class="img-responsive image1">
+        </a>
+        <!--<div class="quick-view-button">-->
+        <!--  <a href="#" data-toggle="modal" data-target="#product-quick-view-modal" class="btn btn-default btn-sm">Quick view</a>-->
+        <!--</div>-->
+      </div>
+      <!-- /.image -->
+      <div class="text">
+        <h3><a href="/pricing_rules/<%= mar[:v] %>"><%= mar[:m] %></a></h3>
+        <!--<p class="price"><del>$280</del> $143.00</p>-->
+      </div>
+      <!-- /.text -->
+      <!--<div class="ribbon sale">-->
+      <!--  <div class="theribbon">SALE</div>-->
+      <!--  <div class="ribbon-background"></div>-->
+      <!--</div>-->
+      <!-- /.ribbon -->
+      <!--<div class="ribbon new">-->
+      <!--  <div class="theribbon">NEW</div>-->
+      <!--  <div class="ribbon-background"></div>-->
+      <!--</div>-->
+      <!-- /.ribbon -->
+    </div>
+    <!-- /.product -->
+  </div>
+  <% end %>
+</div>
+<script>
+  $('a').click(function(){
+    $("#ajax_loader").show();
+  })
+</script>

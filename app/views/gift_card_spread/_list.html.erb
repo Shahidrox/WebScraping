@@ -1,0 +1,10 @@
+<% @data = data %>
+<ul class="list-group">
+  <% if @data.present? %>
+    <% @data.each_with_index do |m, index| %>
+      <li class="list-group-item"><%= index+1 %>: <%= m %></li>
+    <% end %>
+  <% else %>
+    Please wait..
+  <% end %>
+</ul>

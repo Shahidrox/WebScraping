@@ -1,0 +1,7 @@
+<%= form_tag("/update_password", method: "post", class: 'form-signin') do %>
+    <h3 class="form-signin-heading">CHANGE PASSWORD</h3>
+    <%= password_field_tag '', '',name: 'user[current_password]', required: 'required', class: 'form-control', placeholder: "Current Password", autocomplete: "off" %>
+    <%= password_field_tag '', '',name: 'user[password]', required: 'required', class: 'form-control', autocomplete: "off", placeholder: "New Password"%>
+    <%= password_field_tag '', '',name: 'user[password_confirmation]', required: 'required', class: 'form-control', autocomplete: "off", placeholder: "Password onfirmation" %>
+    <%= submit_tag 'Change Password', class: 'btn btn-lg btn-primary btn-block' %>
+<% end %>

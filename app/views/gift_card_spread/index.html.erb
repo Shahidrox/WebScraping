@@ -1,0 +1,14 @@
+<div id="marchantlist">
+<%= render partial: 'gift_card_spread/list', :locals => { :data => @data }%>
+</div>
+<script>
+  $("#ajax_loader").show();
+  $.ajax({
+    type: 'GET',
+    url: '/unavail_merchant',
+    success: function(data) {
+      $("#ajax_loader").hide();
+    },
+  });
+
+</script>

@@ -1,0 +1,15 @@
+<% cards.each do |c| %>
+  <% class_n = (c[:seller] == "Gift Card Spread") ? 'gcs-color' : ''%>
+    <tr>
+    <td class=<%= class_n %>><%= c[:rank] %></td>
+    <td><%= c[:merchant] %></td>
+    <td><%= (c[:card_type] == 'physical')? 'Gift Card' :  'eCode'%></td>
+    <td><%= c[:quantity] %></td>
+    <td><%= c[:value] %></td>
+    <td class=<%= class_n %>><%= c[:v_rank] %></td>
+    <td><%= c[:discount] %></td>
+    <td class=<%= class_n %>><%= c[:seller] %></td>
+    <td><% if (class_n != '')%><span class="label label-danger"><%= number_with_precision(c[:one_and_one], precision: 2) %></span><%end%></td>
+    <td><% if (class_n != '')%><span class="label label-success"><%= number_with_precision(c[:one_and_gcs], precision: 2) %></span><%end%></td>
+  </tr>
+<%end%>

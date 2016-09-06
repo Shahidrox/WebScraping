@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  granny_url: MyString
+  website: MyString
+  ecodes_available: 1
+  max_savings: 1
+  average_savings: 1
+  cards_available: 1
+
+two:
+  name: MyString
+  granny_url: MyString
+  website: MyString
+  ecodes_available: 1
+  max_savings: 1
+  average_savings: 1
+  cards_available: 1

@@ -1,0 +1,33 @@
+<nav class="navbar navbar-default" role="navigation">
+	<div class="navbar-header">
+		<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#czsale-navbar">
+			<span class="sr-only">Toggle navigation</span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+		</button>
+	</div>
+	<div class="collapse navbar-collapse" id="czsale-navbar">
+		<ul class="nav navbar-nav navbar-left">
+			<!--<li class="<%#= active_link_to_class(welcome_path, :active => :inclusive) %>"><a href="<%#= welcome_path %>" >Home</a></li>-->
+			<!--<li class="<%#= active_link_to_class(feach_deta_path, :active => :inclusive) %>"><a href="<%#= feach_deta_path %>">Feach deta</a></li>-->
+			<li class="<%= active_link_to_class(flash_deals_path, :active => :inclusive) %>"><a href="<%= flash_deals_path %>" >Flash Deals</a></li>
+			<li class="<%= active_link_to_class(top_gift_card_path, :active => :inclusive) %>"><a href="<%= top_gift_card_path %>">Top Gift Card</a></li>
+			<!--<li class="<%#= active_link_to_class(pricing_rules_path, :active => :inclusive) %>"><a href="<%#= pricing_rules_path %>">Pricing Rules</a></li>-->
+			<li class="<%= active_link_to_class(merchants_path, :active => :inclusive) %>"><a href="<%= merchants_path %>">Marchants</a></li>
+			<li class="<%= active_link_to_class(all_cards_path, :active => :inclusive) %>"><a href="<%= all_cards_path %>">All Gift Cards</a></li>
+			
+		</ul>
+		<ul class="nav navbar-nav navbar-right">
+			<% if user_signed_in? %>
+				<li class="<%= active_link_to_class(update_profile_path, :active => :inclusive) %>"><a href="<%= update_profile_path %>">Change Password</a></li>
+				<li class="dropdown"><%= link_to 'Sign out', destroy_user_session_path, :method => :delete %></li>
+			<% end %>
+		</ul>   
+	</div>
+</nav>
+<script>
+	$('nav ul li a').click(function(){
+		$("#ajax_loader").show();
+	})
+</script>

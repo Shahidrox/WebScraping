@@ -1,0 +1,55 @@
+
+<a id='click' class="btn btn-success">Click here to fetch data from giftcardgranny</a>
+<br><br>
+<div class="form-group">
+    <input type="text" id="search" class="form-control" placeholder="Live search" />
+</div>
+<table class="table table-bordered" id="table">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Ecodes available</th>
+            <th>Max Savings</th>
+            <th>Average Savings</th>
+        </tr>
+    </thead>
+    <tbody id="campaign_keywords">
+
+    </tbody>
+</table>
+
+
+
+<script type="text/javascript">
+    $('#click').click(function() {
+        $("#ajax_loader").show();
+        $.ajax({
+            type: 'GET',
+            url: '/get_value',
+            success: function(data) {
+                console.log(data.msg)
+                    // ascending order
+                function MaxSavings(x, y) {
+                    return y.max_savings - x.max_savings;
+                }
+                data.msg.sort(MaxSavings);
+                for (var n = 0; n < data.msg.length; n++) {
+                    $('#campaign_keywords').append("<tr><td>" + (n + 1) + "</td><td>" + data.msg[n].name + "</td><td>" + data.msg[n].ecodes_available + "</td><td>" + data.msg[n].max_savings + "</td><td>" + data.msg[n].average_savings + "</td></tr>");
+                }
+                $("#ajax_loader").hide();
+            },
+        });
+    });
+
+    $("#search").on("keyup", function() {
+        _this = this;
+        // Show only matching TR, hide rest of them
+        $.each($("#table tbody tr"), function() {
+            if ($(this).text().toLowerCase().indexOf($(_this).val().toLowerCase()) === -1)
+                $(this).hide();
+            else
+                $(this).show();
+        });
+    });
+</script>

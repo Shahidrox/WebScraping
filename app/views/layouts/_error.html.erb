@@ -1,0 +1,9 @@
+<% flash.each do |key, value| %>
+  <div class="alert alert-<%= key %> flash_msg">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a>
+    <%= value %>
+  </div>
+<% end %>
+<script>
+    $('.flash_msg').delay(5000).fadeOut('slow');
+</script>

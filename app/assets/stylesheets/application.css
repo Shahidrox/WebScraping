@@ -1,0 +1,23 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ */
+.checkbox input[type=checkbox], .checkbox-inline input[type=checkbox], .radio input[type=radio], .radio-inline input[type=radio]{ margin-left: 0px;}
+.checkbox label, .radio label{ padding-left: 28px; }
+input[type="checkbox"], input[type="radio"] { line-height: normal; margin: 1px 0 0 !important; }
+.sort_table { position: relative; cursor: pointer; height: 21px; text-align: left; }
+.sort {display: none; font-size: 20px; position: absolute; top: 0; right: 0; }
+.sort-asc {right: 10px !important;}
+.sort_table:not(.asc):hover > .sort-asc, .sort_table.asc > .sort-asc, .sort_table.asc:hover > .sort-dsc, .sort_table.dsc > .sort-dsc { display: block; }
+.sort_table:not(.asc):hover > .sort-asc, .sort_table.asc:hover > .sort-dsc {color: red;}
